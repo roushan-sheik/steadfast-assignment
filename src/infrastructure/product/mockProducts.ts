@@ -1,0 +1,53 @@
+import { Product } from "@/types/product/types";
+
+export const mockProducts: Product[] = [
+  {
+    id: 101,
+    name: "Wireless Mouse",
+    slug: "wireless-mouse",
+    regular_price: "500.00",
+    discount_price: "350.00",
+    is_variant: false,
+    thumbnail: "https://via.placeholder.com/300x300?text=Wireless+Mouse",
+    rating_avg: 4.2,
+    rating_count: 120,
+    available_stock: 50,
+    badges: [],
+    badgeProductVariationsExclude: [],
+  },
+  {
+    id: 102,
+    name: "Gaming Keyboard",
+    slug: "gaming-keyboard",
+    regular_price: "1500.00",
+    discount_price: "1200.00",
+    is_variant: false,
+    thumbnail: "https://via.placeholder.com/300x300?text=Gaming+Keyboard",
+    rating_avg: 4.8,
+    rating_count: 80,
+    available_stock: 30,
+    badges: [
+      {
+        id: 1,
+        name: "Best Seller",
+        type: 1,
+        type_label: "Best Seller",
+      },
+    ],
+    badgeProductVariationsExclude: [],
+  },
+  {
+    id: 103,
+    name: "Bluetooth Earbuds",
+    slug: "bluetooth-earbuds",
+    regular_price: "2000.00",
+    discount_price: "1800.00",
+    is_variant: true,
+    thumbnail: "https://via.placeholder.com/300x300?text=Bluetooth+Earbuds",
+    rating_avg: 4.6,
+    rating_count: 45,
+    available_stock: 100,
+    badges: [],
+    badgeProductVariationsExclude: [],
+  },
+];
