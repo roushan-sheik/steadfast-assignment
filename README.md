@@ -1,10 +1,10 @@
- 
 ## Getting Started
-# Raintor Assignment – Frontend
- 
-🌐 **Live Demo**: [https://raintor-assignment-sepia.vercel.app/](https://raintor-assignment-sepia.vercel.app/)
 
-This is the frontend for the **Raintor Assignment** built using [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind CSS](https://tailwindcss.com/). It also uses [React Query](https://tanstack.com/query/latest) for data fetching and caching.
+# Steadfast Assignment – Frontend
+
+<!-- 🌐 **Live Demo**: [https:// -sepia.vercel.app/](https:// -sepia.vercel.app/) -->
+
+This is the frontend for the **Steadfast Assignment** built using [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind CSS](https://tailwindcss.com/). It also uses [React Query](https://tanstack.com/query/latest) for data fetching and caching.
 
 ---
 
@@ -25,12 +25,16 @@ This is the frontend for the **Raintor Assignment** built using [Next.js](https:
 ### 1. Clone the Repository
 
 ```bash
-git clone git@github.com:roushan-sheik/raintor-assignment.git
-```
-```bash
-cd raintor-assignment/raintor-frontend
+https://github.com/roushan-sheik/steadfast-assignment
 ```
 
+```bash
+cd steadfast-assignment
+```
+
+```bash
+npm install
+```
 
 First, run the development server:
 
@@ -59,7 +63,6 @@ This approach aligns with the principles of **Domain-Driven Design (DDD)**, enco
 - Scalable structure for large codebases
 
 ---
-
 
 ## Root Structure: `src/`
 
@@ -98,9 +101,10 @@ components/
 ```
 
 ## `infrastructure/` – Data Access & API Logic
+
 Used for handling data fetching, API clients, and TanStack React Query integrations.
 This layer abstracts HTTP logic away from components and centralizes domain-based API behavior
- 
+
 ```bash
     infrastructure/
     ├── blog/
