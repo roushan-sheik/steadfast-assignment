@@ -17,7 +17,7 @@ export interface Product {
   rating_count: number;
   available_stock: number;
   badges: Badge[];
-  badgeProductVariationsExclude: any[]; // adjust if needed
+  badgeProductVariationsExclude: any[];
 }
 
 export interface ProductApiResponse {
@@ -27,4 +27,15 @@ export interface ProductApiResponse {
   last_page: number;
   current_page: number;
   next_page_url: string | null;
+}
+
+export interface CartItem {
+  id: number;
+  name: string;
+  slug: string;
+  regular_price: string;
+  discount_price: string;
+  thumbnail: string;
+  quantity: number;
+  available_stock: number;
 }
