@@ -42,11 +42,27 @@
     --color-black: #000000;
     --color-white: #ffffff;
   }
+
+  /* Custom scrollbar for mobile menu */
+  .mobile-menu-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .mobile-menu-scroll::-webkit-scrollbar-track {
+    background: var(--color-neutral-100);
+  }
+
+  .mobile-menu-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-neutral-300);
+    border-radius: 2px;
+  }
+
+  .mobile-menu-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-400);
+  }
 }
 
-/* -----------------------------
-   Typography Utilities with Colors
------------------------------- */
+/* Typography Utilities with Colors */
 @layer components {
   .text-display1 {
     @apply text-[4.5rem] leading-[1.4] text-[color:var(--color-neutral-900)];
@@ -90,5 +106,61 @@
   }
   .text-caption2 {
     @apply text-[0.625rem] leading-[1.4] text-[color:var(--color-neutral-500)];
+  }
+
+  /* Header specific responsive utilities */
+  .header-shadow {
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-menu-enter {
+    transform: translateX(-100%);
+  }
+
+  .mobile-menu-enter-active {
+    transform: translateX(0);
+    transition: transform 300ms ease-in-out;
+  }
+
+  .mobile-menu-exit {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-exit-active {
+    transform: translateX(-100%);
+    transition: transform 300ms ease-in-out;
+  }
+}
+
+/* Responsive breakpoint utilities */
+@layer utilities {
+  /* Mobile First Breakpoints */
+  @media (max-width: 640px) {
+    .header-mobile {
+      padding: 0.75rem 1rem;
+    }
+
+    .logo-mobile {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    .header-tablet {
+      padding: 0.875rem 1.5rem;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .search-bar-medium {
+      max-width: 400px;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .search-bar-large {
+      max-width: 600px;
+    }
   }
 }
