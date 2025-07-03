@@ -20,13 +20,20 @@ const initialState: CartState = {
 
 // Helper function to calculate totals
 const calculateTotals = (items: CartItem[]) => {
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = items.length; // Count unique products, not total quantity
   const totalPrice = items.reduce((sum, item) => {
     const price = parseFloat(item.discount_price || item.regular_price);
     return sum + price * item.quantity;
   }, 0);
 
   return { totalItems, totalPrice };
+};
+
+// Helper function to update state totals
+const updateStateTotals = (state: CartState) => {
+  const totals = calculateTotals(state.items);
+  state.totalItems = totals.totalItems;
+  state.totalPrice = totals.totalPrice;
 };
 
 export const cartSlice = createSlice({
@@ -58,20 +65,14 @@ export const cartSlice = createSlice({
         state.items.push(cartItem);
       }
 
-      // Recalculate totals
-      const totals = calculateTotals(state.items);
-      state.totalItems = totals.totalItems;
-      state.totalPrice = totals.totalPrice;
+      // Update totals
+      updateStateTotals(state);
     },
 
     // Remove item from cart completely
     removeFromCart: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
-
-      // Recalculate totals
-      const totals = calculateTotals(state.items);
-      state.totalItems = totals.totalItems;
-      state.totalPrice = totals.totalPrice;
+      updateStateTotals(state);
     },
 
     // Increment item quantity
@@ -79,11 +80,7 @@ export const cartSlice = createSlice({
       const item = state.items.find((item) => item.id === action.payload);
       if (item && item.quantity < item.available_stock) {
         item.quantity += 1;
-
-        // Recalculate totals
-        const totals = calculateTotals(state.items);
-        state.totalItems = totals.totalItems;
-        state.totalPrice = totals.totalPrice;
+        updateStateTotals(state);
       }
     },
 
@@ -99,11 +96,7 @@ export const cartSlice = createSlice({
             (cartItem) => cartItem.id !== action.payload
           );
         }
-
-        // Recalculate totals
-        const totals = calculateTotals(state.items);
-        state.totalItems = totals.totalItems;
-        state.totalPrice = totals.totalPrice;
+        updateStateTotals(state);
       }
     },
 
@@ -123,11 +116,7 @@ export const cartSlice = createSlice({
           // Update quantity if within stock limit
           item.quantity = quantity;
         }
-
-        // Recalculate totals
-        const totals = calculateTotals(state.items);
-        state.totalItems = totals.totalItems;
-        state.totalPrice = totals.totalPrice;
+        updateStateTotals(state);
       }
     },
 
