@@ -1,4 +1,3 @@
-// services/productsApi.ts
 import { config } from "@/constants/config";
 import { Product, ProductApiResponse } from "@/types/product/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -7,7 +6,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: config.baseUrl,
+    baseUrl: config.baseUrl, // Must be: http://157.230.240.97:9999/api/v1
   }),
   tagTypes: ["Product"],
   endpoints: (builder) => ({
@@ -23,13 +22,12 @@ export const productsApi = createApi({
 
     // Fetch single product by ID
     getProductById: builder.query<Product, number>({
-      query: (id) => `/shop/products/${id}`,
+      query: (id) => `/products/${id}`,
       providesTags: (result, error, id) => [{ type: "Product", id }],
     }),
 
-    // Fetch product by slug
     getProductBySlug: builder.query<Product, string>({
-      query: (slug) => `/shop/products/slug/${slug}`,
+      query: (slug) => `/product/${slug}`, // FIXED here
       providesTags: (result, error, slug) => [{ type: "Product", id: slug }],
     }),
 
@@ -45,7 +43,7 @@ export const productsApi = createApi({
   }),
 });
 
-// Export hooks for usage in functional components
+// Export hooks
 export const {
   useGetProductsQuery,
   useGetProductByIdQuery,

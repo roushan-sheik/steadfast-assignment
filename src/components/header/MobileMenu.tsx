@@ -44,8 +44,8 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
       <div className="fixed top-0 left-0 h-full w-80 bg-white z-50 transform transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto">
         <div className="p-4">
           {/* Search Bar */}
-          <div className="mb-6">
-            <div className="relative">
+          <div className="mb-6 ">
+            <div className="relative ">
               <input
                 type="text"
                 placeholder="Search for anything...."

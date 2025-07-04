@@ -41,17 +41,18 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     // Add item to cart
-    addToCart: (state, action: PayloadAction<Product>) => {
+    // cartSlice.ts
+    addToCart: (
+      state,
+      action: PayloadAction<Product & { quantity: number }>
+    ) => {
       const product = action.payload;
       const existingItem = state.items.find((item) => item.id === product.id);
 
       if (existingItem) {
-        // If item exists, increment quantity (check stock limit)
-        if (existingItem.quantity < existingItem.available_stock) {
-          existingItem.quantity += 1;
-        }
+        const newQty = existingItem.quantity + product.quantity;
+        existingItem.quantity = Math.min(newQty, existingItem.available_stock);
       } else {
-        // Add new item to cart
         const cartItem: CartItem = {
           id: product.id,
           name: product.name,
@@ -59,13 +60,12 @@ export const cartSlice = createSlice({
           regular_price: product.regular_price,
           discount_price: product.discount_price,
           thumbnail: product.thumbnail,
-          quantity: 1,
+          quantity: product.quantity,
           available_stock: product.available_stock,
         };
         state.items.push(cartItem);
       }
 
-      // Update totals
       updateStateTotals(state);
     },
 

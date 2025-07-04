@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft } from "lucide-react";
-import { RootState } from "@/store";
+
 import {
   selectCartItems,
   selectCartTotalItems,
