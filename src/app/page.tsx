@@ -1,7 +1,5 @@
-import React from "react";
+import { redirect } from "next/navigation";
 
-const HomePage = () => {
-  return <div className="min-h-screen">Home</div>;
-};
-
-export default HomePage;
+export default function Home() {
+  redirect("/products");
+}
