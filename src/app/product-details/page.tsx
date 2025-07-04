@@ -1,8 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { useState } from "react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+// import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Star,
@@ -20,14 +21,14 @@ import { useGetProductBySlugQuery } from "@/redux/api/productsApi";
 import { RootState } from "@/redux/store"; // Fixed import path
 import { addToCart, selectCartItemQuantity } from "@/redux/features/cartSlice"; // Added missing import
 
-interface ProductDetailsPageProps {
-  params: {
-    slug: string;
-  };
-}
+// interface ProductDetailsPageProps {
+//   params: {
+//     slug: string;
+//   };
+// }
 
 const ProductDetailsPage = () => {
-  const params = useParams();
+  // const params = useParams();
   //   const slug = params.slug as string;
   const slug = "portable-mini-rechargeable-fan-3200-mah";
 
@@ -66,21 +67,9 @@ const ProductDetailsPage = () => {
         "/images/shirt-4.jpg",
         "/images/shirt-5.jpg",
       ];
-
   const handleAddToCart = () => {
     if (product) {
-      // Create a product object with the selected quantity and options
-      const productWithOptions = {
-        ...product,
-        selectedSize,
-        selectedColor,
-        selectedQuantity: quantity,
-      };
-
-      // Dispatch multiple times based on quantity selected
-      for (let i = 0; i < quantity; i++) {
-        dispatch(addToCart(product));
-      }
+      dispatch(addToCart({ ...product, quantity }));
     }
   };
 

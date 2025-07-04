@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MapPin, Phone, Mail, Headphones } from "lucide-react";
+import { MapPin, Phone, Mail, Headphones, Panda } from "lucide-react";
 import SocialLinks from "../footer/SocialLinks";
 import AppDownload from "../footer/AppDownload";
 import PaymentMethods from "../footer/PaymentMethods";
@@ -16,10 +16,10 @@ const Footer: React.FC = () => {
           <div className="lg:col-span-1">
             {/* Logo */}
             <div className="flex items-center mb-6">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center mr-3">
-                <div className="w-4 h-4 bg-[color:var(--color-neutral-800)] rounded-full"></div>
-              </div>
-              <span className="text-heading2 font-bold">FALCON</span>
+              <Panda />
+              <span className="text-heading2 text-white pl-2 font-bold">
+                FALCON
+              </span>
             </div>
 
             {/* Description */}

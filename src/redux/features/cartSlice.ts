@@ -1,16 +1,15 @@
-// slices/cartSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 import type { RootState } from "../store";
 import { CartItem, Product } from "@/types/product/types";
 
-interface CartState {
+export interface CartState {
   items: CartItem[];
   totalItems: number;
   totalPrice: number;
   isOpen: boolean;
 }
 
+// Initial state: empty cart (safe for SSR)
 const initialState: CartState = {
   items: [],
   totalItems: 0,
@@ -18,30 +17,35 @@ const initialState: CartState = {
   isOpen: false,
 };
 
-// Helper function to calculate totals
+// Helper: calculate totals
 const calculateTotals = (items: CartItem[]) => {
-  const totalItems = items.length; // Count unique products, not total quantity
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => {
     const price = parseFloat(item.discount_price || item.regular_price);
     return sum + price * item.quantity;
   }, 0);
-
   return { totalItems, totalPrice };
 };
 
-// Helper function to update state totals
-const updateStateTotals = (state: CartState) => {
-  const totals = calculateTotals(state.items);
-  state.totalItems = totals.totalItems;
-  state.totalPrice = totals.totalPrice;
+// Helper: save to localStorage (only client)
+const saveCartToLocalStorage = (state: CartState) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("cart", JSON.stringify(state));
+  }
 };
 
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // Add item to cart
-    // cartSlice.ts
+    // Load cart from localStorage after client hydration
+    loadCartFromStorage: (state, action: PayloadAction<CartState>) => {
+      state.items = action.payload.items;
+      state.totalItems = action.payload.totalItems;
+      state.totalPrice = action.payload.totalPrice;
+      state.isOpen = action.payload.isOpen;
+    },
+
     addToCart: (
       state,
       action: PayloadAction<Product & { quantity: number }>
@@ -65,42 +69,48 @@ export const cartSlice = createSlice({
         };
         state.items.push(cartItem);
       }
-
-      updateStateTotals(state);
+      const totals = calculateTotals(state.items);
+      state.totalItems = totals.totalItems;
+      state.totalPrice = totals.totalPrice;
+      saveCartToLocalStorage(state);
     },
 
-    // Remove item from cart completely
     removeFromCart: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
-      updateStateTotals(state);
+      const totals = calculateTotals(state.items);
+      state.totalItems = totals.totalItems;
+      state.totalPrice = totals.totalPrice;
+      saveCartToLocalStorage(state);
     },
 
-    // Increment item quantity
     incrementQuantity: (state, action: PayloadAction<number>) => {
       const item = state.items.find((item) => item.id === action.payload);
       if (item && item.quantity < item.available_stock) {
         item.quantity += 1;
-        updateStateTotals(state);
+        const totals = calculateTotals(state.items);
+        state.totalItems = totals.totalItems;
+        state.totalPrice = totals.totalPrice;
+        saveCartToLocalStorage(state);
       }
     },
 
-    // Decrement item quantity
     decrementQuantity: (state, action: PayloadAction<number>) => {
       const item = state.items.find((item) => item.id === action.payload);
       if (item) {
         if (item.quantity > 1) {
           item.quantity -= 1;
         } else {
-          // Remove item if quantity would become 0
           state.items = state.items.filter(
             (cartItem) => cartItem.id !== action.payload
           );
         }
-        updateStateTotals(state);
+        const totals = calculateTotals(state.items);
+        state.totalItems = totals.totalItems;
+        state.totalPrice = totals.totalPrice;
+        saveCartToLocalStorage(state);
       }
     },
 
-    // Update item quantity directly
     updateQuantity: (
       state,
       action: PayloadAction<{ id: number; quantity: number }>
@@ -110,36 +120,37 @@ export const cartSlice = createSlice({
 
       if (item) {
         if (quantity <= 0) {
-          // Remove item if quantity is 0 or negative
           state.items = state.items.filter((cartItem) => cartItem.id !== id);
         } else if (quantity <= item.available_stock) {
-          // Update quantity if within stock limit
           item.quantity = quantity;
         }
-        updateStateTotals(state);
+        const totals = calculateTotals(state.items);
+        state.totalItems = totals.totalItems;
+        state.totalPrice = totals.totalPrice;
+        saveCartToLocalStorage(state);
       }
     },
 
-    // Clear entire cart
     clearCart: (state) => {
       state.items = [];
       state.totalItems = 0;
       state.totalPrice = 0;
+      saveCartToLocalStorage(state);
     },
 
-    // Toggle cart visibility
     toggleCart: (state) => {
       state.isOpen = !state.isOpen;
+      saveCartToLocalStorage(state);
     },
 
-    // Open cart
     openCart: (state) => {
       state.isOpen = true;
+      saveCartToLocalStorage(state);
     },
 
-    // Close cart
     closeCart: (state) => {
       state.isOpen = false;
+      saveCartToLocalStorage(state);
     },
   },
 });
@@ -155,6 +166,7 @@ export const {
   toggleCart,
   openCart,
   closeCart,
+  loadCartFromStorage,
 } = cartSlice.actions;
 
 // Selectors

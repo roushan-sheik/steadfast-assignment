@@ -12,12 +12,7 @@ import {
 } from "@/redux/features/cartSlice";
 import { useRouter } from "next/navigation";
 
-interface ProductListProps {
-  page?: number;
-  limit?: number;
-}
-
-const ProductList: React.FC<ProductListProps> = () => {
+const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading, error, isFetching } = useGetProductsQuery({

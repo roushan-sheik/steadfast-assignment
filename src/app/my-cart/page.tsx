@@ -8,13 +8,13 @@ import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft } from "lucide-react";
 import {
   selectCartItems,
   selectCartTotalItems,
-  selectCartTotalPrice,
   incrementQuantity,
   decrementQuantity,
   removeFromCart,
   clearCart,
 } from "../../redux/features/cartSlice";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,6 @@ const CartPage = () => {
 
   const cartItems = useSelector(selectCartItems);
   const totalItems = useSelector(selectCartTotalItems);
-  const totalPrice = useSelector(selectCartTotalPrice);
 
   const handleSelectAll = () => {
     if (selectAll) {
@@ -102,12 +101,11 @@ const CartPage = () => {
           <p className="text-gray-600 mb-6">
             Add some items to your cart to get started
           </p>
-          <button
-            onClick={() => router.push("/products")}
-            className="bg-teal-600 text-white px-6 py-3 rounded-md font-medium hover:bg-teal-700 transition-colors"
-          >
-            Continue Shopping
-          </button>
+          <Link href={"/products"}>
+            <button className="bg-teal-600 cursor-pointer text-white px-6 py-3 rounded-md font-medium hover:bg-teal-700 transition-colors">
+              Continue Shopping
+            </button>
+          </Link>
         </div>
       </div>
     );

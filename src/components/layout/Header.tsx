@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, User, Menu, X, Panda } from "lucide-react";
 import Navigation from "@/components/header/Navigation";
 import MobileMenu from "@/components/header/MobileMenu";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCartTotalItems } from "@/redux/features/cartSlice";
+import Link from "next/link";
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,12 +22,12 @@ const Header: React.FC = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="text-white text-heading2 font-bold flex items-center gap-2">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                <div className="w-4 h-4 bg-[color:var(--color-neutral-800)] rounded-full"></div>
+            <Link href={"/products"}>
+              <div className="text-white text-heading2 font-bold flex items-center gap-2">
+                <Panda />
+                FALCON
               </div>
-              FALCON
-            </div>
+            </Link>
           </div>
 
           {/* Search Bar - Hidden on mobile */}
@@ -51,12 +52,14 @@ const Header: React.FC = () => {
             </button>
 
             {/* Cart */}
-            <button className="relative text-white hover:text-[color:var(--color-brand-300)] transition-colors">
-              <ShoppingCart className="w-6 h-6" />
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                {totalItems}
-              </span>
-            </button>
+            <Link href={"/my-cart"}>
+              <button className="relative text-white cursor-pointer hover:text-[color:var(--color-brand-300)] transition-colors">
+                <ShoppingCart className="w-6 h-6" />
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {totalItems}
+                </span>
+              </button>
+            </Link>
 
             {/* User */}
             <button className="text-white hover:text-[color:var(--color-brand-300)] transition-colors">

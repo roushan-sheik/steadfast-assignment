@@ -3,6 +3,7 @@ import { Onest } from "next/font/google";
 import "./globals.css";
 import Layout from "@/components/layout/Layout";
 import Providers from "@/Providers";
+import CartHydrator from "@/components/cart/CartHydrator";
 
 export const metadata: Metadata = {
   title: "Steadfast LTD",
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={onest.className}>
         <Providers>
+          <CartHydrator />
           <Layout>{children}</Layout>
         </Providers>
       </body>
