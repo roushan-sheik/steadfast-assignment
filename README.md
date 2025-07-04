@@ -2,11 +2,24 @@
 
 # Steadfast Assignment – Frontend
 
-<!-- 🌐 **Live Demo**: [https:// -sepia.vercel.app/](https:// -sepia.vercel.app/) -->
+> ⚠️ **Important Note**
+>
+> The **Products API does not work properly after deployment to Vercel** due to a **CORS error**.
+> Vercel enforces **HTTPS-only** requests, but the current API endpoint uses **HTTP**, which is treated as insecure in production environments.
+>
+> **API Endpoint:**  
+> `http://157.230.240.97:9999/api/v1/shop/products`
+>
+> ✅ To fix this in production, ensure the API supports **HTTPS**.
+
+🌐 **Live Demo**: [https://steadfast-assignment-esuc.vercel.app/products](https://steadfast-assignment-esuc.vercel.app/products)
 
 This is the frontend for the **Steadfast Assignment** built using [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind CSS](https://tailwindcss.com/). It also uses [React Query](https://tanstack.com/query/latest) for data fetching and caching.
 
 ---
+
+![Desktop Preview](./public/assets/desktop-preview.png)
+![Mobile Preview](./public/assets/mobile-preview.png)
 
 ## 🚀 Features
 
@@ -17,6 +30,7 @@ This is the frontend for the **Steadfast Assignment** built using [Next.js](http
 - ESLint + Prettier configured
 - Production-ready build scripts
 - Lucide react (Icons)
+- Reduxt Toolkit & RTK Query
 
 ---
 
